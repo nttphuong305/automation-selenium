@@ -3,8 +3,15 @@ from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from pages.login_page import LoginPage
 
-def test_login():
+class TestLogin:
+   def test_login(self, driver):
+    login_page = LoginPage(driver)
+    login_page.login("Admin", "admin123")
+    login_page.is_upgrade_button_displayed()
+
+'''def test_login():
 
     # Declare the driver to help interacting with the Chrome
     driver = webdriver.Chrome()
@@ -29,4 +36,8 @@ def test_login():
     sleep(3)
     upgrade_btn = WebDriverWait(driver, 10).until(lambda d: d.find_element(*upgrade_btn))
 
-    assert upgrade_btn.is_displayed()
+    assert upgrade_btn.is_displayed()'''
+   
+
+   
+   
