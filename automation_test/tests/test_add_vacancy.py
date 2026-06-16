@@ -22,8 +22,7 @@ class TestAddVacancy:
     recruitment_page.select_job_title("Automaton Tester")
     recruitment_page.enter_description("Created by Selenium")
 
-    recruitment_page.enter_hiring_manager(
-            current_user.split()[0])
+    recruitment_page.enter_hiring_manager(current_user.split()[0])
 
     recruitment_page.enter_number_of_positions("1")
 
@@ -33,3 +32,24 @@ class TestAddVacancy:
     recruitment_page.set_publish_rss_true()
 
     recruitment_page.click_save()
+
+        # Verify Edit Vacancy page
+    assert recruitment_page.is_edit_vacancy_page_displayed()
+
+        # Cancel
+    recruitment_page.click_cancel()
+
+        # Verify Vacancies page
+    assert recruitment_page.is_vacancies_page_displayed()
+
+        # Search
+    recruitment_page.click_search()
+
+        # Verify có ít nhất 1 record
+    assert recruitment_page.has_records()
+
+        # Verify vacancy vừa tạo
+    assert recruitment_page.is_vacancy_exist(vacancy_name)
+
+        # LogoutF
+    recruitment_page.logout()

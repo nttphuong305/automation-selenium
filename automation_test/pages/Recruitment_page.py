@@ -63,7 +63,36 @@ class RecruitmentPage:
         self.driver.find_element(*self.save_button).click()
 
     def set_active_false(self):
-        self.click(self.ACTIVE_SWITCH)
+        self.click(self.active_switch)
 
     def set_publish_rss_true(self):
-        self.click(self.RSS_SWITCH)
+        self.click(self.rss_switch)
+
+    def click_save(self):
+        self.click(self.save_button)
+
+    def click_cancel(self):
+        self.click(self.cancel_button)
+
+    def click_search(self):
+        self.click(self.search.button)
+
+    def is_add_vacancy_page_displayed(self):
+        return "addVacancy" in self.driver.current_url
+
+    def is_edit_vacancy_page_displayed(self):
+        return "vacancy" in self.driver.current_url.lower()
+
+    def is_vacancies_page_displayed(self):
+        return "viewJobVacancy" in self.driver.current_url
+
+    def has_records(self):
+        return "No Records Found" not in self.driver.page_source
+
+    def is_vacancy_exist(self, vacancy_name):
+        return vacancy_name in self.driver.page_source
+
+    def logout(self):
+        self.click(self.user_profile)
+        sleep(1)
+        self.click(self.logout)
