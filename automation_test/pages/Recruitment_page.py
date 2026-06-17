@@ -7,9 +7,9 @@ from selenium.webdriver.common.keys import Keys
 from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 
-class RecruitmentPage:
+class RecruitmentPage(BasePage):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
         self.wait = WebDriverWait(driver, 10)
     
     recruitment_menu = (By.XPATH, "//span[text()='Recruitment']")
@@ -26,7 +26,8 @@ class RecruitmentPage:
     user_profile = (By.XPATH,"//p[@class='oxd-userdropdown-name']")
     logout = (By.XPATH,"//a[text()='Logout']")
     number_of_position = (By.XPATH,"//label[text()='Number of Positions']/../following-sibling::div//input")
-
+    cancel_button = (By.XPATH,"//button[normalize-space()='Cancel']")
+    search_button = (By.XPATH,"//button[normalize-space()='Search']")
 
 
     def open_vacancies(self):
@@ -75,7 +76,7 @@ class RecruitmentPage:
         self.click(self.cancel_button)
 
     def click_search(self):
-        self.click(self.search.button)
+        self.click(self.search_button)
 
     def is_add_vacancy_page_displayed(self):
         return "addVacancy" in self.driver.current_url
@@ -90,7 +91,10 @@ class RecruitmentPage:
         return "No Records Found" not in self.driver.page_source
 
     def is_vacancy_exist(self, vacancy_name):
-        return vacancy_name in self.driver.page_source
+        elements = self.driver.find_elements(
+            By.XPATH,
+            f"//*[contains(text(),'{vacancy_name}')]")
+        return len(elements) > 0
 
     def logout(self):
         self.click(self.user_profile)
