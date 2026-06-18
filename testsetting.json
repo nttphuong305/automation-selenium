@@ -4,8 +4,8 @@
         "username": "Admin",
         "password": "admin123"
     },
-    "timeouts"{
-        "implicits":10,
-        "page_load":30
+    "timeouts": {
+        "implicits": 10,
+        "page_load": 30
     }
 }
