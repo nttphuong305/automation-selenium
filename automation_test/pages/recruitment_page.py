@@ -91,10 +91,15 @@ class RecruitmentPage(BasePage):
         return "No Records Found" not in self.driver.page_source
 
     def is_vacancy_exist(self, vacancy_name):
-        elements = self.driver.find_elements(
-            By.XPATH,
-            f"//*[contains(text(),'{vacancy_name}')]")
-        return len(elements) > 0
+        locator = (By.XPATH, f"//*[contains(text(),'{vacancy_name}')]")
+        try:
+            # wait briefly for the vacancy to appear in the DOM
+            self.wait.until(EC.presence_of_element_located(locator))
+            elements = self.driver.find_elements(*locator)
+            return len(elements) > 0
+        except Exception:
+            # timeout or other issue — treat as not present
+            return False
 
     def logout(self):
         self.click(self.user_profile)
