@@ -16,8 +16,8 @@ def driver():
     driver.implicitly_wait(10)
 
     # Mở website
-    driver.get("https://opensource-demo.orangehrmlive.com/")
-
+    #driver.get("https://opensource-demo.orangehrmlive.com/")
+    driver.get("https://demo.guru99.com/test/drag_drop.html")
     yield driver
 
     # Đóng browser
