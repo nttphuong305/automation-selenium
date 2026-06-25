@@ -26,4 +26,8 @@ class ConfigReader:
 
     @staticmethod
     def get_timeout():
-            return ConfigReader.load_config()['timeouts']['implicits']
+        return ConfigReader.load_config()['timeouts']['implicits']
+
+    @staticmethod
+    def get_headless():
+        return ConfigReader.load_config().get('browser', {}).get('headless', False)

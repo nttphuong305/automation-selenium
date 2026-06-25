@@ -1,13 +1,22 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import allure
 from allure_commons.types import AttachmentType
+from utils.config_reader import ConfigReader
 
 
 @pytest.fixture
 def driver():
-    # Khởi tạo Chrome driver
-    driver = webdriver.Chrome()
+    # Khởi tạo Chrome driver với tùy chọn
+    chrome_options = Options()
+    if ConfigReader.get_headless():
+        chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--no-sandbox")
+
+    driver = webdriver.Chrome(options=chrome_options)
 
     # Phóng to cửa sổ
     driver.maximize_window()
@@ -16,8 +25,8 @@ def driver():
     driver.implicitly_wait(10)
 
     # Mở website
-    #driver.get("https://opensource-demo.orangehrmlive.com/")
-    driver.get("https://demo.guru99.com/test/drag_drop.html")
+    driver.get("https://opensource-demo.orangehrmlive.com/")
+    #driver.get("https://demo.guru99.com/test/drag_drop.html")
     yield driver
 
     # Đóng browser
